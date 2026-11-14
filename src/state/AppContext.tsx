@@ -23,6 +23,7 @@ type AppContextValue = {
   changePassword: (current: string, next: string) => Promise<void>;
   updateSettings: (patch: Partial<Bundle['settings']>) => Promise<void>;
   equipLoop: (patch: Partial<Pick<Bundle['loop'], 'skin' | 'accessory' | 'environment' | 'skill'>>) => Promise<string | null>;
+  saveCustomPet: (input: { name: string; eyeColor: string; glowColor: string }) => Promise<void>;
   createGoal: (input: Parameters<typeof store.createGoal>[1]) => Promise<void>;
   updateGoalProgress: (id: string, value: number) => Promise<void>;
   completeGoal: (id: string) => Promise<CompletionResult>;
@@ -122,6 +123,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
         setBundle(next);
         if (!equipError) await buzzImpact();
         return equipError;
+      },
+      saveCustomPet: async (input) => {
+        setBundle(await store.saveCustomPet(requireUser(), input));
+        await buzzSuccess();
       },
       createGoal: async (input) => {
         setBundle(await store.createGoal(requireUser(), input));

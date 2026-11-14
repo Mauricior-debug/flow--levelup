@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { FlatList, KeyboardAvoidingView, Platform, Text, TextInput, View } from 'react-native';
+import { Stack } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button } from '../components/Button';
 import { LoopView } from '../components/LoopView';
@@ -25,10 +26,12 @@ export default function ChatScreen() {
       void addLoopReply().finally(() => setTyping(false));
     }
   }, [addLoopReply, bundle]);
+  const petName = bundle?.loop.skin === 'custom' && bundle.loop.petName ? bundle.loop.petName : 'Loop';
   return (
     <KeyboardAvoidingView style={{ flex: 1, backgroundColor: colors.bg }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <Stack.Screen options={{ title: petName }} />
       <View style={{ alignItems: 'center', paddingTop: 8 }}>
-        <LoopView visual={typing ? 'talking' : 'happy'} size={92} />
+        <LoopView visual={typing ? 'talking' : 'happy'} skin={bundle?.loop.skin} eyeColor={bundle?.loop.eyeColor} glowColor={bundle?.loop.glowColor} size={92} />
       </View>
       <FlatList
         data={[...messages].reverse()}

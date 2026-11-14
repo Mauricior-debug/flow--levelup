@@ -66,7 +66,7 @@ export default function HomeScreen() {
               <View style={{ backgroundColor: 'rgba(16,13,29,0.78)', borderRadius: 18, paddingHorizontal: 14, paddingVertical: 10, marginBottom: 4, maxWidth: 280 }}>
                 <Text style={{ color: '#FFFFFF', fontFamily: font.semibold, textAlign: 'center' }}>{line}</Text>
               </View>
-              <LoopView visual={bundle.loop.mood} skin={bundle.loop.skin} accessory={bundle.loop.accessory} size={170} />
+              <LoopView visual={bundle.loop.mood} skin={bundle.loop.skin} accessory={bundle.loop.accessory} eyeColor={bundle.loop.eyeColor} glowColor={bundle.loop.glowColor} size={170} />
             </Pressable>
           </View>
         </View>

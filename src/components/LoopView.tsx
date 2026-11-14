@@ -32,11 +32,15 @@ export function LoopView({
   skin = 'classic',
   accessory = 'none',
   size = 220,
+  eyeColor,
+  glowColor,
 }: {
   visual: LoopVisual;
   skin?: LookId;
   accessory?: AccessoryId;
   size?: number;
+  eyeColor?: string | null;
+  glowColor?: string | null;
 }) {
   const [reduce, setReduce] = useState(false);
   const motion = useSharedValue(0);
@@ -72,15 +76,18 @@ export function LoopView({
     return { transform: [{ translateY: -8 * motion.value }] };
   });
   const calm = visual === 'idle' || visual === 'happy' || visual === 'relaxed';
-  const source = calm && skin !== 'classic' ? SKIN[skin] : SPRITE[visual];
+  const source = calm && skin !== 'classic' && skin !== 'custom' ? SKIN[skin] : SPRITE[visual];
   const ring = accessory === 'scarf' ? '#FFB020' : accessory === 'star' ? '#FFE45C' : accessory === 'glow' ? '#A78BFA' : 'transparent';
+  const yours = skin === 'custom' && glowColor;
   return (
     <View accessibilityLabel={`Loop, ${visual}`} style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-      {(visual === 'excited' || visual === 'celebrate' || accessory === 'glow') && !reduce ? <Particles /> : null}
+      {yours ? <View pointerEvents="none" style={{ position: 'absolute', width: size * 0.72, height: size * 0.72, borderRadius: size, backgroundColor: glowColor, opacity: 0.45 }} /> : null}
+      {(visual === 'excited' || visual === 'celebrate' || accessory === 'glow' || yours) && !reduce ? <Particles /> : null}
       <Animated.View style={[{ width: size, height: size }, style]}>
         <Image source={source} style={{ width: size, height: size }} resizeMode="contain" accessibilityIgnoresInvertColors />
       </Animated.View>
       {accessory !== 'none' ? <View pointerEvents="none" style={[styles.ring, { borderColor: ring, width: size * 0.78, height: size * 0.78, borderRadius: size }]} /> : null}
+      {skin === 'custom' && eyeColor ? <View pointerEvents="none" style={[styles.ring, { borderColor: eyeColor, width: size * 0.62, height: size * 0.62, borderRadius: size }]} /> : null}
       {accessory === 'star' ? <View style={styles.star} accessibilityElementsHidden><View style={styles.starCore} /></View> : null}
       {visual === 'sleepy' ? <Zzz /> : null}
       {visual === 'thinking' ? <Dots /> : null}

@@ -149,6 +149,14 @@ export const SKILL_DEFS: SkillDef[] = [
   { id: 'deep', name: 'Deep work', detail: 'Loop highlights the harder mission when you have time.' },
 ];
 
+export const PET_EYE_COLORS = ['#FFE45C', '#FFFFFF', '#7DD3FC', '#F9A8D4', '#86EFAC', '#FDBA74'] as const;
+export const PET_GLOW_COLORS = ['#A78BFA', '#60A5FA', '#F472B6', '#34D399', '#FBBF24', '#FB7185'] as const;
+
+export function isPetColor(value: string, kind: 'eye' | 'glow'): boolean {
+  const list = kind === 'eye' ? PET_EYE_COLORS : PET_GLOW_COLORS;
+  return (list as readonly string[]).includes(value);
+}
+
 export function isGentle(consistency: string | null): boolean {
   if (!consistency) return false;
   return consistency.includes('rarely') || consistency.includes('fade') || consistency.includes('wearing me out');

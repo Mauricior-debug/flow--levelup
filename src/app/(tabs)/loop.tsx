@@ -33,11 +33,13 @@ export default function LoopScreen() {
   return (
     <View collapsable={false} style={{ flex: 1, backgroundColor: colors.bg }}>
       <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 120, width: '100%', maxWidth: 560, alignSelf: 'center' }}>
-        <Text style={{ color: colors.text, fontFamily: font.extra, fontSize: 22, textAlign: 'center', paddingTop: insets.top + 10 }}>Loop</Text>
+        <Text style={{ color: colors.text, fontFamily: font.extra, fontSize: 22, textAlign: 'center', paddingTop: insets.top + 10 }}>
+          {bundle.loop.skin === 'custom' && bundle.loop.petName ? bundle.loop.petName : 'Loop'}
+        </Text>
         <View style={{ height: 320, marginTop: 12 }}>
           <Image source={SCENES[scene]} style={{ position: 'absolute', width: '100%', height: '100%' }} resizeMode="cover" />
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
-            <LoopView visual={visual} skin={bundle.loop.skin} accessory={bundle.loop.accessory} size={210} />
+            <LoopView visual={visual} skin={bundle.loop.skin} accessory={bundle.loop.accessory} eyeColor={bundle.loop.eyeColor} glowColor={bundle.loop.glowColor} size={210} />
           </View>
         </View>
         <View style={{ paddingHorizontal: 20, gap: 8, marginTop: 16 }}>
@@ -57,15 +59,31 @@ export default function LoopScreen() {
             ))}
           </View>
           {tab === 'looks' ? (
-            <Row>
-              {LOOK_DEFS.map((look) => {
-                const open = lookUnlocked(look.id, bundle.loop.bondXp, level);
-                const equipped = bundle.loop.skin === look.id;
-                return (
-                  <Card key={look.id} colors={colors} title={look.name} detail={open ? look.detail : `Opens at bond ${look.bond} and level ${look.level}`} selected={equipped} onPress={() => { void equipLoop({ skin: look.id }).then((message) => setNote(message)); }} />
-                );
-              })}
-            </Row>
+            <View style={{ gap: 10 }}>
+              <Row>
+                {LOOK_DEFS.map((look) => {
+                  const open = lookUnlocked(look.id, bundle.loop.bondXp, level);
+                  const equipped = bundle.loop.skin === look.id;
+                  return (
+                    <Card key={look.id} colors={colors} title={look.name} detail={open ? look.detail : `Opens at bond ${look.bond} and level ${look.level}`} selected={equipped} onPress={() => { void equipLoop({ skin: look.id }).then((message) => setNote(message)); }} />
+                  );
+                })}
+                <Card
+                  colors={colors}
+                  title={bundle.loop.petName ?? 'Yours'}
+                  detail={bundle.loop.petName ? 'Your Loop' : 'Make a Loop that is yours'}
+                  selected={bundle.loop.skin === 'custom'}
+                  onPress={() => {
+                    if (!bundle.loop.petName) {
+                      router.push('/loop/create');
+                      return;
+                    }
+                    void equipLoop({ skin: 'custom' }).then((message) => setNote(message));
+                  }}
+                />
+              </Row>
+              <Button colors={colors} tone="secondary" label={bundle.loop.petName ? 'Edit your Loop' : 'Create your Loop'} onPress={() => router.push('/loop/create')} />
+            </View>
           ) : null}
           {tab === 'items' ? (
             <View style={{ gap: 10 }}>
