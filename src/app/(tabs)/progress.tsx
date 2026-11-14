@@ -33,7 +33,7 @@ export default function ProgressScreen() {
         <Text style={{ color: colors.text, fontFamily: font.extra, fontSize: 28, textAlign: 'center' }}>Your Progress</Text>
         <View style={{ flexDirection: 'row', backgroundColor: colors.card, borderRadius: 22, padding: 4, marginTop: 16 }}>
           {PERIODS.map((item) => (
-            <Pressable key={item.id} accessibilityRole="button" accessibilityState={{ selected: period === item.id }} onPressIn={() => setPeriod(item.id)} style={({ pressed }) => [{ flex: 1, minHeight: 44, borderRadius: 18, alignItems: 'center', justifyContent: 'center', backgroundColor: period === item.id ? colors.yellow : 'transparent', opacity: pressed ? 0.75 : 1 }]}>
+            <Pressable key={item.id} accessibilityRole="button" accessibilityState={{ selected: period === item.id }} onPress={() => setPeriod(item.id)} style={({ pressed }) => [{ flex: 1, minHeight: 44, borderRadius: 18, alignItems: 'center', justifyContent: 'center', backgroundColor: period === item.id ? colors.yellow : 'transparent', opacity: pressed ? 0.75 : 1 }]}>
               <Text style={{ color: period === item.id ? colors.onYellow : colors.textSecondary, fontFamily: font.bold }}>{item.label}</Text>
             </Pressable>
           ))}

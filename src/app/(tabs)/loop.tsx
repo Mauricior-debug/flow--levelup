@@ -51,7 +51,7 @@ export default function LoopScreen() {
           <Button colors={colors} label="Talk with Loop" onPress={() => router.push('/chat')} />
           <View style={{ flexDirection: 'row', backgroundColor: colors.card, borderRadius: 22, padding: 4 }}>
             {(['looks', 'items', 'skills'] as const).map((item) => (
-              <Pressable key={item} accessibilityRole="button" onPressIn={() => setTab(item)} style={({ pressed }) => [{ flex: 1, minHeight: 44, borderRadius: 18, alignItems: 'center', justifyContent: 'center', backgroundColor: tab === item ? colors.yellow : 'transparent', opacity: pressed ? 0.75 : 1 }]}>
+              <Pressable key={item} accessibilityRole="button" onPress={() => setTab(item)} style={({ pressed }) => [{ flex: 1, minHeight: 44, borderRadius: 18, alignItems: 'center', justifyContent: 'center', backgroundColor: tab === item ? colors.yellow : 'transparent', opacity: pressed ? 0.75 : 1 }]}>
                 <Text style={{ color: tab === item ? colors.onYellow : colors.text, fontFamily: font.bold, textTransform: 'capitalize' }}>{item}</Text>
               </Pressable>
             ))}
@@ -100,7 +100,7 @@ function Row({ children }: { children: ReactNode }) {
 
 function Card({ title, detail, selected, onPress, colors, wide = false }: { title: string; detail: string; selected: boolean; onPress: () => void; colors: ReturnType<typeof useColors>; wide?: boolean }) {
   return (
-    <Pressable accessibilityRole="button" accessibilityState={{ selected }} onPressIn={onPress} style={({ pressed }) => [{ width: wide ? '100%' : 168, minHeight: 88, borderRadius: 18, padding: 12, backgroundColor: colors.card, borderWidth: 1.5, borderColor: selected ? colors.yellow : colors.line, opacity: pressed ? 0.75 : 1 }]}>
+    <Pressable accessibilityRole="button" accessibilityState={{ selected }} onPress={onPress} style={({ pressed }) => [{ width: wide ? '100%' : 168, minHeight: 88, borderRadius: 18, padding: 12, backgroundColor: colors.card, borderWidth: 1.5, borderColor: selected ? colors.yellow : colors.line, opacity: pressed ? 0.75 : 1 }]}>
       <Text style={{ color: colors.text, fontFamily: font.bold, fontSize: 16 }}>{title}</Text>
       <Text style={{ color: colors.textSecondary, fontFamily: font.regular, marginTop: 6, lineHeight: 18 }}>{detail}</Text>
     </Pressable>

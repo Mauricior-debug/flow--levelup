@@ -1,4 +1,4 @@
-import { useRef, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 import { paletteFor, font, type Palette } from '../theme/colors';
 
@@ -13,21 +13,13 @@ type Props = {
 };
 
 export function Button({ label, onPress, colors, disabled, busy, tone = 'primary', arrow }: Props) {
-  const fired = useRef(false);
   const blocked = disabled || busy;
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityState={{ disabled: !!blocked }}
       disabled={blocked}
-      onPressIn={() => {
-        if (blocked || fired.current) return;
-        fired.current = true;
-        onPress();
-      }}
-      onPressOut={() => {
-        fired.current = false;
-      }}
+      onPress={onPress}
       style={({ pressed }) => [
         styles.base,
         tone === 'primary' && { backgroundColor: pressed ? colors.yellowPressed : colors.yellow },
@@ -66,20 +58,12 @@ export function IconButton({
   children: ReactNode;
   colors?: Palette;
 }) {
-  const fired = useRef(false);
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={label}
       hitSlop={6}
-      onPressIn={() => {
-        if (fired.current) return;
-        fired.current = true;
-        onPress();
-      }}
-      onPressOut={() => {
-        fired.current = false;
-      }}
+      onPress={onPress}
       style={({ pressed }) => [styles.icon, pressed && { opacity: 0.55, transform: [{ scale: 0.96 }] }]}
     >
       <View>{children}</View>

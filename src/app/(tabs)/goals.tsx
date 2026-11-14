@@ -30,7 +30,7 @@ export default function GoalsScreen() {
         renderItem={({ item }) => {
           const ratio = item.targetValue === 0 ? 0 : Math.min(1, item.currentValue / item.targetValue);
           return (
-            <Pressable accessibilityRole="button" onPressIn={() => router.push(`/goal/${item.id}`)} style={({ pressed }) => [{ marginBottom: 12, borderRadius: 20, backgroundColor: colors.card, padding: 16, gap: 8, opacity: pressed ? 0.75 : 1 }]}>
+            <Pressable accessibilityRole="button" onPress={() => router.push(`/goal/${item.id}`)} style={({ pressed }) => [{ marginBottom: 12, borderRadius: 20, backgroundColor: colors.card, padding: 16, gap: 8, opacity: pressed ? 0.75 : 1 }]}>
               <Text style={{ color: colors.textSecondary, fontFamily: font.medium, textTransform: 'capitalize' }}>{item.horizon.replace('_', ' ')} · {item.category}</Text>
               <Text style={{ color: colors.text, fontFamily: font.bold, fontSize: 18 }}>{item.title}</Text>
               <View style={{ height: 8, borderRadius: 4, backgroundColor: colors.bg }}>
