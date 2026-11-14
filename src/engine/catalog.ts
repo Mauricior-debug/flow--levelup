@@ -101,9 +101,9 @@ export type LookDef = {
 
 export const LOOK_DEFS: LookDef[] = [
   { id: 'classic', name: 'Classic', detail: 'The Loop you met on day one.', bond: 1, level: 1 },
-  { id: 'explorer', name: 'Explorer', detail: 'A hood for days you go outside.', bond: 2, level: 1 },
-  { id: 'cyber', name: 'Cyber', detail: 'Cool light, same warm face.', bond: 3, level: 1 },
-  { id: 'galaxy', name: 'Galaxy', detail: 'A night-sky suit for later levels.', bond: 1, level: 6 },
+  { id: 'explorer', name: 'Explorer', detail: 'A hood for days you go outside.', bond: 1, level: 1 },
+  { id: 'cyber', name: 'Cyber', detail: 'Cool light, same warm face.', bond: 1, level: 1 },
+  { id: 'galaxy', name: 'Galaxy', detail: 'A night-sky suit.', bond: 1, level: 1 },
 ];
 
 export type AccessoryDef = {

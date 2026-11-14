@@ -75,8 +75,7 @@ export function LoopView({
     }
     return { transform: [{ translateY: -8 * motion.value }] };
   });
-  const calm = visual === 'idle' || visual === 'happy' || visual === 'relaxed';
-  const source = calm && skin !== 'classic' && skin !== 'custom' ? SKIN[skin] : SPRITE[visual];
+  const source = skin !== 'classic' && skin !== 'custom' ? SKIN[skin] : SPRITE[visual];
   const ring = accessory === 'scarf' ? '#FFB020' : accessory === 'star' ? '#FFE45C' : accessory === 'glow' ? '#A78BFA' : 'transparent';
   const yours = skin === 'custom' && glowColor;
   return (
