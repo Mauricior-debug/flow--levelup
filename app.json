@@ -1,0 +1,84 @@
+{
+  "expo": {
+    "name": "LEVELUP",
+    "slug": "levelup",
+    "scheme": "levelup",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "runtimeVersion": "58.0.0",
+    "updates": {
+      "url": "https://u.expo.dev/8af1fbe0-a69c-44c6-a40c-383ee984db51"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.levelup.companion",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSCameraUsageDescription": "LEVELUP uses the camera so you can set your profile photo.",
+        "NSPhotoLibraryUsageDescription": "LEVELUP uses your photo library so you can set your profile photo.",
+        "NSPhotoLibraryAddUsageDescription": "LEVELUP needs permission to save your profile photo."
+      }
+    },
+    "android": {
+      "package": "com.levelup.companion",
+      "softwareKeyboardLayoutMode": "resize",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#100D1D"
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.POST_NOTIFICATIONS",
+        "android.permission.VIBRATE",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single",
+      "favicon": "./assets/icon.png",
+      "backgroundColor": "#100D1D"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-sqlite",
+      "expo-secure-store",
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#100D1D",
+          "image": "./assets/icon.png",
+          "imageWidth": 180
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#FFE45C"
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "LEVELUP uses your photo library so you can set your profile photo.",
+          "cameraPermission": "LEVELUP uses the camera so you can set your profile photo."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": false
+    },
+    "owner": "naza123",
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "8af1fbe0-a69c-44c6-a40c-383ee984db51"
+      }
+    }
+  }
+}
