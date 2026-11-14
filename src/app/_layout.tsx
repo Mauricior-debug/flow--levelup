@@ -96,6 +96,7 @@ function Routes() {
       <Stack.Screen name="chat" options={{ headerShown: true, title: 'Loop', animation: 'slide_from_bottom' }} />
       <Stack.Screen name="achievements" options={{ headerShown: true, title: 'Achievements' }} />
       <Stack.Screen name="goal/new" options={{ headerShown: true, title: 'New goal', presentation: 'modal' }} />
+      <Stack.Screen name="loop/create" options={{ headerShown: true, title: 'Your Loop', presentation: 'modal' }} />
       <Stack.Screen name="goal/[id]" options={{ headerShown: true, title: 'Goal' }} />
       <Stack.Screen name="settings/account" options={{ headerShown: true, title: 'Account' }} />
       <Stack.Screen name="settings/notifications" options={{ headerShown: true, title: 'Notifications' }} />

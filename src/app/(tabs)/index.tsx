@@ -32,11 +32,11 @@ export default function HomeScreen() {
     <View collapsable={false} style={{ flex: 1, backgroundColor: colors.bg }}>
       <ScrollView contentInsetAdjustmentBehavior="never" contentContainerStyle={{ paddingBottom: insets.bottom + 110, width: '100%', maxWidth: 560, alignSelf: 'center' }}>
         <View style={{ paddingTop: insets.top + 8, paddingHorizontal: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Pressable accessibilityRole="button" accessibilityLabel="Profile" onPressIn={() => router.navigate('/(tabs)/profile')} style={({ pressed }) => [{ width: 44, height: 44, borderRadius: 22, overflow: 'hidden', backgroundColor: colors.card, opacity: pressed ? 0.7 : 1 }]}>
+          <Pressable accessibilityRole="button" accessibilityLabel="Profile" onPress={() => router.navigate('/(tabs)/profile')} style={({ pressed }) => [{ width: 44, height: 44, borderRadius: 22, overflow: 'hidden', backgroundColor: colors.card, opacity: pressed ? 0.7 : 1 }]}>
             {bundle.user.avatarUri ? <Image source={{ uri: bundle.user.avatarUri }} style={{ width: 44, height: 44 }} /> : <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}><Ionicons name="person" size={18} color={colors.text} /></View>}
           </Pressable>
           <Text style={{ color: colors.text, fontFamily: font.extra, letterSpacing: 3, fontSize: 16 }}>LEVELUP</Text>
-          <Pressable accessibilityRole="button" accessibilityLabel="Notices" onPressIn={() => router.push('/inbox')} style={({ pressed }) => [{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center', opacity: pressed ? 0.6 : 1 }]}>
+          <Pressable accessibilityRole="button" accessibilityLabel="Notices" onPress={() => router.push('/inbox')} style={({ pressed }) => [{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center', opacity: pressed ? 0.6 : 1 }]}>
             <Ionicons name="notifications-outline" size={24} color={colors.text} />
             {bundle.notices.some((notice) => !notice.read) ? <View style={{ position: 'absolute', top: 10, right: 10, width: 8, height: 8, borderRadius: 4, backgroundColor: colors.yellow }} /> : null}
           </Pressable>
@@ -49,20 +49,27 @@ export default function HomeScreen() {
             </View>
             <Text style={{ color: colors.textSecondary, fontFamily: font.medium, marginTop: 6 }}>{level.into} / {level.need} XP</Text>
           </View>
-          <Pressable accessibilityRole="button" accessibilityLabel="Streak" onPressIn={() => router.push('/streak')} style={({ pressed }) => [{ minHeight: 44, paddingHorizontal: 12, borderRadius: 16, backgroundColor: colors.card, alignItems: 'center', justifyContent: 'center', opacity: pressed ? 0.7 : 1 }]}>
+          <Pressable accessibilityRole="button" accessibilityLabel="Streak" onPress={() => router.push('/streak')} style={({ pressed }) => [{ minHeight: 44, paddingHorizontal: 12, borderRadius: 16, backgroundColor: colors.card, alignItems: 'center', justifyContent: 'center', opacity: pressed ? 0.7 : 1 }]}>
             <Text style={{ color: colors.streak, fontFamily: font.bold }}>{model.pendingGap > 0 ? 'Paused' : `${model.streak}`}</Text>
             <Text style={{ color: colors.textSecondary, fontFamily: font.medium, fontSize: 12 }}>{model.pendingGap > 0 ? 'Streak' : 'Day streak'}</Text>
           </Pressable>
         </View>
-        <Pressable accessibilityRole="button" accessibilityLabel="Open Loop" onPressIn={() => router.navigate('/(tabs)/loop')} style={{ marginTop: 16, height: 280 }}>
+        <View style={{ marginTop: 16, height: 280 }}>
           <Image source={require('../../../assets/scenes/scene-island.jpg')} style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }} resizeMode="cover" />
-          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', paddingBottom: 8 }}>
-            <View style={{ backgroundColor: 'rgba(16,13,29,0.78)', borderRadius: 18, paddingHorizontal: 14, paddingVertical: 10, marginBottom: 4, maxWidth: 280 }}>
-              <Text style={{ color: '#FFFFFF', fontFamily: font.semibold, textAlign: 'center' }}>{line}</Text>
-            </View>
-            <LoopView visual={bundle.loop.mood} skin={bundle.loop.skin} accessory={bundle.loop.accessory} size={170} />
+          <View pointerEvents="box-none" style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', paddingBottom: 8 }}>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="Open Loop"
+              onPress={() => router.navigate('/(tabs)/loop')}
+              style={({ pressed }) => [{ alignItems: 'center', opacity: pressed ? 0.85 : 1 }]}
+            >
+              <View style={{ backgroundColor: 'rgba(16,13,29,0.78)', borderRadius: 18, paddingHorizontal: 14, paddingVertical: 10, marginBottom: 4, maxWidth: 280 }}>
+                <Text style={{ color: '#FFFFFF', fontFamily: font.semibold, textAlign: 'center' }}>{line}</Text>
+              </View>
+              <LoopView visual={bundle.loop.mood} skin={bundle.loop.skin} accessory={bundle.loop.accessory} eyeColor={bundle.loop.eyeColor} glowColor={bundle.loop.glowColor} size={170} />
+            </Pressable>
           </View>
-        </Pressable>
+        </View>
         <View style={{ paddingHorizontal: 20, marginTop: 18, gap: 10 }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' }}>
             <Text style={{ color: colors.text, fontFamily: font.bold, fontSize: 20 }}>Today's missions</Text>
@@ -97,7 +104,7 @@ export default function HomeScreen() {
               </View>
             ))}
           </View>
-          <Pressable accessibilityRole="button" onPressIn={() => router.push('/achievements')} style={({ pressed }) => [{ minHeight: 64, borderRadius: 18, backgroundColor: colors.card, padding: 14, justifyContent: 'center', opacity: pressed ? 0.75 : 1 }]}>
+          <Pressable accessibilityRole="button" onPress={() => router.push('/achievements')} style={({ pressed }) => [{ minHeight: 64, borderRadius: 18, backgroundColor: colors.card, padding: 14, justifyContent: 'center', opacity: pressed ? 0.75 : 1 }]}>
             <Text style={{ color: colors.text, fontFamily: font.bold }}>Achievements · {bundle.achievements.length}</Text>
             <Text style={{ color: colors.textSecondary, fontFamily: font.regular, marginTop: 2 }}>{level.need - level.into} XP to level {level.level + 1}</Text>
           </Pressable>

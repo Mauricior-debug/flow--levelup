@@ -30,6 +30,7 @@ export function moodAfterWin(input: { leveledUp: boolean; weekly: boolean }): { 
 }
 
 export function lookUnlocked(id: LookId, bondXp: number, level: number): boolean {
+  if (id === 'custom') return false;
   const def = LOOK_DEFS.find((item) => item.id === id);
   if (!def) return false;
   const bond = bondLevel(bondXp).level;

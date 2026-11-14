@@ -2,6 +2,7 @@ import { achievementByKey, earnedAchievementKeys, type AchievementStats } from '
 import { replyTo } from '../engine/chat';
 import { daysBetween, isoWeekKey, todayKey } from '../engine/dates';
 import { createId } from '../engine/ids';
+import { isPetColor } from '../engine/catalog';
 import { accessoryUnlocked, environmentUnlocked, lookUnlocked, moodAfterWin, moodOnOpen, skillUnlocked } from '../engine/loop';
 import { generatePlan, planDates, rollingMissions } from '../engine/plan';
 import { bondForChat, bondForDifficulty, bondLevel, BOND_ACHIEVEMENT, BOND_STREAK, levelFromTotal, sumXp, xpFor, xpForGoal, XP } from '../engine/progression';
@@ -257,6 +258,9 @@ async function readBundle(userId: string): Promise<Bundle> {
     mood_until: string | null;
     chat_bond_day: string | null;
     chat_bond_today: number;
+    pet_name: string | null;
+    eye_color: string | null;
+    glow_color: string | null;
   }>('SELECT * FROM loop_state WHERE user_id = ?', userId);
   const settingsRow = await db.getFirstAsync<{
     theme: Settings['theme'];
@@ -293,6 +297,9 @@ async function readBundle(userId: string): Promise<Bundle> {
       moodUntil: loopRow?.mood_until ?? null,
       chatBondDay: loopRow?.chat_bond_day ?? null,
       chatBondToday: loopRow?.chat_bond_today ?? 0,
+      petName: loopRow?.pet_name ?? null,
+      eyeColor: loopRow?.eye_color ?? null,
+      glowColor: loopRow?.glow_color ?? null,
     },
     settings: {
       theme: settingsRow?.theme ?? 'dark',
@@ -822,7 +829,10 @@ export async function equipLoop(userId: string, patch: Partial<Pick<LoopState, '
     const level = levelFromTotal(sumXp(bundle.transactions)).level;
     const weeklyDone = bundle.missions.some((mission) => mission.origin === 'user' && mission.status === 'complete' && mission.difficulty === 'weekly');
     const missionCount = bundle.missions.filter((mission) => mission.origin === 'user' && mission.status === 'complete').length;
-    if (patch.skin && !lookUnlocked(patch.skin, bundle.loop.bondXp, level)) {
+    if (patch.skin === 'custom' && !bundle.loop.petName) {
+      return { bundle, error: 'Create your Loop first.' };
+    }
+    if (patch.skin && patch.skin !== 'custom' && !lookUnlocked(patch.skin, bundle.loop.bondXp, level)) {
       return { bundle, error: 'That look opens as your bond and level grow.' };
     }
     if (patch.accessory && !accessoryUnlocked(patch.accessory, bundle.loop.bondXp, level, weeklyDone)) {
@@ -845,6 +855,26 @@ export async function equipLoop(userId: string, patch: Partial<Pick<LoopState, '
       userId,
     );
     return { bundle: await readBundle(userId), error: null };
+  });
+}
+
+export async function saveCustomPet(userId: string, input: { name: string; eyeColor: string; glowColor: string }): Promise<Bundle> {
+  return enqueue(async () => {
+    const name = input.name.trim().slice(0, 16);
+    if (!name) throw new Error('Give your Loop a name.');
+    if (!isPetColor(input.eyeColor, 'eye') || !isPetColor(input.glowColor, 'glow')) {
+      throw new Error('Pick a colour from the set.');
+    }
+    const db = await getDb();
+    await db.runAsync(
+      'UPDATE loop_state SET pet_name = ?, eye_color = ?, glow_color = ?, skin = ? WHERE user_id = ?',
+      name,
+      input.eyeColor,
+      input.glowColor,
+      'custom',
+      userId,
+    );
+    return readBundle(userId);
   });
 }
 

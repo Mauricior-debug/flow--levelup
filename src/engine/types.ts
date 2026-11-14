@@ -30,7 +30,7 @@ export const STEPS = [
 ] as const;
 export type StepId = (typeof STEPS)[number];
 
-export const LOOKS = ['classic', 'explorer', 'cyber', 'galaxy'] as const;
+export const LOOKS = ['classic', 'explorer', 'cyber', 'galaxy', 'custom'] as const;
 export type LookId = (typeof LOOKS)[number];
 
 export const ACCESSORIES = ['none', 'scarf', 'star', 'glow'] as const;
@@ -166,6 +166,9 @@ export type LoopState = {
   moodUntil: string | null;
   chatBondDay: string | null;
   chatBondToday: number;
+  petName: string | null;
+  eyeColor: string | null;
+  glowColor: string | null;
 };
 
 export type Settings = {

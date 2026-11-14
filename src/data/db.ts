@@ -125,7 +125,10 @@ CREATE TABLE IF NOT EXISTS loop_state (
   mood TEXT NOT NULL,
   mood_until TEXT,
   chat_bond_day TEXT,
-  chat_bond_today INTEGER NOT NULL DEFAULT 0
+  chat_bond_today INTEGER NOT NULL DEFAULT 0,
+  pet_name TEXT,
+  eye_color TEXT,
+  glow_color TEXT
 );
 CREATE TABLE IF NOT EXISTS settings (
   user_id TEXT PRIMARY KEY,
@@ -149,6 +152,11 @@ export async function getDb(): Promise<SQLite.SQLiteDatabase> {
     dbPromise = (async () => {
       const db = await SQLite.openDatabaseAsync('levelup.db');
       await db.execAsync(SCHEMA);
+      const columns = await db.getAllAsync<{ name: string }>('PRAGMA table_info(loop_state)');
+      const names = new Set(columns.map((column) => column.name));
+      if (!names.has('pet_name')) await db.execAsync('ALTER TABLE loop_state ADD COLUMN pet_name TEXT');
+      if (!names.has('eye_color')) await db.execAsync('ALTER TABLE loop_state ADD COLUMN eye_color TEXT');
+      if (!names.has('glow_color')) await db.execAsync('ALTER TABLE loop_state ADD COLUMN glow_color TEXT');
       return db;
     })().catch((error) => {
       dbPromise = null;

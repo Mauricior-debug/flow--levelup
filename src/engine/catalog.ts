@@ -101,9 +101,9 @@ export type LookDef = {
 
 export const LOOK_DEFS: LookDef[] = [
   { id: 'classic', name: 'Classic', detail: 'The Loop you met on day one.', bond: 1, level: 1 },
-  { id: 'explorer', name: 'Explorer', detail: 'A hood for days you go outside.', bond: 2, level: 1 },
-  { id: 'cyber', name: 'Cyber', detail: 'Cool light, same warm face.', bond: 3, level: 1 },
-  { id: 'galaxy', name: 'Galaxy', detail: 'A night-sky suit for later levels.', bond: 1, level: 6 },
+  { id: 'explorer', name: 'Explorer', detail: 'A hood for days you go outside.', bond: 1, level: 1 },
+  { id: 'cyber', name: 'Cyber', detail: 'Cool light, same warm face.', bond: 1, level: 1 },
+  { id: 'galaxy', name: 'Galaxy', detail: 'A night-sky suit.', bond: 1, level: 1 },
 ];
 
 export type AccessoryDef = {
@@ -148,6 +148,14 @@ export const SKILL_DEFS: SkillDef[] = [
   { id: 'comeback', name: 'Comeback', detail: 'A gentler tone after time away.' },
   { id: 'deep', name: 'Deep work', detail: 'Loop highlights the harder mission when you have time.' },
 ];
+
+export const PET_EYE_COLORS = ['#FFE45C', '#FFFFFF', '#7DD3FC', '#F9A8D4', '#86EFAC', '#FDBA74'] as const;
+export const PET_GLOW_COLORS = ['#A78BFA', '#60A5FA', '#F472B6', '#34D399', '#FBBF24', '#FB7185'] as const;
+
+export function isPetColor(value: string, kind: 'eye' | 'glow'): boolean {
+  const list = kind === 'eye' ? PET_EYE_COLORS : PET_GLOW_COLORS;
+  return (list as readonly string[]).includes(value);
+}
 
 export function isGentle(consistency: string | null): boolean {
   if (!consistency) return false;

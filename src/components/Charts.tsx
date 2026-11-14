@@ -50,7 +50,7 @@ export function Radar({
             key={score.id}
             accessibilityRole="button"
             accessibilityLabel={`${score.label}, ${score.score}`}
-            onPressIn={() => setSelected(index)}
+            onPress={() => setSelected(index)}
             style={({ pressed }) => [styles.chip, { borderColor: index === selected ? colors.yellow : colors.line, opacity: pressed ? 0.7 : 1 }]}
           >
             <Text style={{ color: colors.text, fontFamily: font.semibold, fontSize: 13 }}>{score.label}</Text>
@@ -85,7 +85,7 @@ export function Bars({
             key={`${item.label}-${index}`}
             accessibilityRole="button"
             accessibilityLabel={`${item.label}, ${item.xp} XP`}
-            onPressIn={() => setSelected(index)}
+            onPress={() => setSelected(index)}
             style={({ pressed }) => [styles.barHit, { opacity: pressed ? 0.7 : 1 }]}
           >
             <View style={styles.track}>

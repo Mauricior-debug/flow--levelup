@@ -1,4 +1,4 @@
-import { ReactNode, useRef } from 'react';
+import { ReactNode } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Svg, { Path } from 'react-native-svg';
@@ -77,19 +77,11 @@ export function ProgressHeader({ step, total, colors }: { step: number; total: n
 }
 
 export function BackButton({ onPress, colors }: { onPress: () => void; colors: Palette }) {
-  const fired = useRef(false);
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel="Back"
-      onPressIn={() => {
-        if (fired.current) return;
-        fired.current = true;
-        onPress();
-      }}
-      onPressOut={() => {
-        fired.current = false;
-      }}
+      onPress={onPress}
       style={({ pressed }) => [styles.back, { opacity: pressed ? 0.55 : 1 }]}
     >
       <Ionicons name="chevron-back" size={26} color={colors.text} />
@@ -112,19 +104,11 @@ export function Choice({
   colors: Palette;
   icon?: keyof typeof Ionicons.glyphMap;
 }) {
-  const fired = useRef(false);
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityState={{ selected }}
-      onPressIn={() => {
-        if (fired.current) return;
-        fired.current = true;
-        onPress();
-      }}
-      onPressOut={() => {
-        fired.current = false;
-      }}
+      onPress={onPress}
       style={({ pressed }) => [
         styles.choice,
         {
@@ -155,7 +139,7 @@ export function MissionRow({ mission, colors, onOpen, onComplete }: { mission: M
   const icon = mission.category === 'fitness' ? 'barbell-outline' : mission.category === 'learning' ? 'book-outline' : mission.category === 'money' ? 'wallet-outline' : mission.category === 'business' ? 'briefcase-outline' : mission.category === 'mindset' ? 'sparkles-outline' : 'leaf-outline';
   return (
     <View style={[styles.mission, { backgroundColor: colors.bgElevated }]}>
-      <Pressable accessibilityRole="button" accessibilityLabel={mission.title} onPressIn={onOpen} style={({ pressed }) => [styles.missionMain, { opacity: pressed ? 0.7 : 1 }]}>
+      <Pressable accessibilityRole="button" accessibilityLabel={mission.title} onPress={onOpen} style={({ pressed }) => [styles.missionMain, { opacity: pressed ? 0.7 : 1 }]}>
         <View style={[styles.missionIcon, { backgroundColor: colors.card }]}>
           <Ionicons name={icon} size={18} color={colors.purple} />
         </View>
@@ -168,7 +152,7 @@ export function MissionRow({ mission, colors, onOpen, onComplete }: { mission: M
         accessibilityRole="button"
         accessibilityLabel={done ? 'Completed' : `Complete ${mission.title}`}
         disabled={done}
-        onPressIn={done ? undefined : onComplete}
+        onPress={done ? undefined : onComplete}
         style={({ pressed }) => [styles.complete, { borderColor: done ? colors.success : colors.line, backgroundColor: done ? colors.success : 'transparent', opacity: pressed ? 0.7 : 1 }]}
       >
         {done ? <Ionicons name="checkmark" size={18} color={colors.onYellow} /> : null}
@@ -223,7 +207,7 @@ export function ErrorBlock({ message, colors, onRetry }: { message: string; colo
       <Text style={{ color: colors.text, fontFamily: font.bold, fontSize: 22, textAlign: 'center' }}>Something went wrong</Text>
       <Text style={{ color: colors.textSecondary, fontFamily: font.regular, fontSize: 16, textAlign: 'center', lineHeight: 22 }}>{message}</Text>
       {onRetry ? (
-        <Pressable accessibilityRole="button" onPressIn={onRetry} style={({ pressed }) => [{ minHeight: 48, justifyContent: 'center' }, { opacity: pressed ? 0.6 : 1 }]}>
+        <Pressable accessibilityRole="button" onPress={onRetry} style={({ pressed }) => [{ minHeight: 48, justifyContent: 'center' }, { opacity: pressed ? 0.6 : 1 }]}>
           <Text style={{ color: colors.yellow, fontFamily: font.bold, fontSize: 16 }}>Try again</Text>
         </Pressable>
       ) : null}

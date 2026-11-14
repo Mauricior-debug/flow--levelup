@@ -46,26 +46,26 @@ export default function ProfileScreen() {
           <Text style={{ color: colors.textSecondary, fontFamily: font.medium }}>{bundle.user.email ?? 'Saved on this device'}</Text>
           <Text style={{ color: colors.text, fontFamily: font.semibold }}>Level {level.level} · {sumXp(bundle.transactions)} XP · {bundle.settings.streakCount} day streak</Text>
           <View style={{ flexDirection: 'row', gap: 10 }}>
-            <Pressable accessibilityRole="button" onPressIn={() => { void pick(false); }} style={({ pressed }) => [{ minHeight: 44, justifyContent: 'center', paddingHorizontal: 8, opacity: pressed ? 0.6 : 1 }]}><Text style={{ color: colors.yellow, fontFamily: font.bold }}>Choose photo</Text></Pressable>
-            <Pressable accessibilityRole="button" onPressIn={() => { void pick(true); }} style={({ pressed }) => [{ minHeight: 44, justifyContent: 'center', paddingHorizontal: 8, opacity: pressed ? 0.6 : 1 }]}><Text style={{ color: colors.yellow, fontFamily: font.bold }}>Take photo</Text></Pressable>
+            <Pressable accessibilityRole="button" onPress={() => { void pick(false); }} style={({ pressed }) => [{ minHeight: 44, justifyContent: 'center', paddingHorizontal: 8, opacity: pressed ? 0.6 : 1 }]}><Text style={{ color: colors.yellow, fontFamily: font.bold }}>Choose photo</Text></Pressable>
+            <Pressable accessibilityRole="button" onPress={() => { void pick(true); }} style={({ pressed }) => [{ minHeight: 44, justifyContent: 'center', paddingHorizontal: 8, opacity: pressed ? 0.6 : 1 }]}><Text style={{ color: colors.yellow, fontFamily: font.bold }}>Take photo</Text></Pressable>
           </View>
           {photoError ? (
             <View style={{ gap: 6, alignItems: 'center' }}>
               <Text style={{ color: colors.danger, textAlign: 'center', fontFamily: font.medium }}>{photoError}</Text>
-              <Pressable accessibilityRole="button" onPressIn={() => { void Linking.openSettings(); }} style={({ pressed }) => [{ minHeight: 44, justifyContent: 'center', opacity: pressed ? 0.6 : 1 }]}><Text style={{ color: colors.text, fontFamily: font.bold }}>Open Settings</Text></Pressable>
+              <Pressable accessibilityRole="button" onPress={() => { void Linking.openSettings(); }} style={({ pressed }) => [{ minHeight: 44, justifyContent: 'center', opacity: pressed ? 0.6 : 1 }]}><Text style={{ color: colors.text, fontFamily: font.bold }}>Open Settings</Text></Pressable>
             </View>
           ) : null}
         </View>
         <View style={{ backgroundColor: colors.card, borderRadius: 20, overflow: 'hidden' }}>
           {rows.map(([label, href]) => (
-            <Pressable key={href} accessibilityRole="button" onPressIn={() => router.push(href)} style={({ pressed }) => [{ minHeight: 52, paddingHorizontal: 16, justifyContent: 'center', borderBottomWidth: 1, borderBottomColor: colors.line, opacity: pressed ? 0.65 : 1 }]}>
+            <Pressable key={href} accessibilityRole="button" onPress={() => router.push(href)} style={({ pressed }) => [{ minHeight: 52, paddingHorizontal: 16, justifyContent: 'center', borderBottomWidth: 1, borderBottomColor: colors.line, opacity: pressed ? 0.65 : 1 }]}>
               <Text style={{ color: colors.text, fontFamily: font.semibold, fontSize: 16 }}>{label}</Text>
             </Pressable>
           ))}
         </View>
         <Pressable
           accessibilityRole="button"
-          onPressIn={() => {
+          onPress={() => {
             const message = bundle.settings.shareProgress
               ? `I'm level ${level.level} on LEVELUP, with ${sumXp(bundle.transactions)} XP and a ${bundle.settings.streakCount}-day streak.`
               : 'I’m building better habits with LEVELUP.';
@@ -77,7 +77,7 @@ export default function ProfileScreen() {
         </Pressable>
         <Pressable
           accessibilityRole="button"
-          onPressIn={() => {
+          onPress={() => {
             Alert.alert('Sign out?', 'Your progress stays on this device.', [
               { text: 'Cancel', style: 'cancel' },
               { text: 'Sign out', style: 'destructive', onPress: () => { void signOut().then(() => router.replace('/sign-in')); } },
